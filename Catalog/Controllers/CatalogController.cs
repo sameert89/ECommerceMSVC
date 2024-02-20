@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.Controllers
 {
+    [ApiController]
+    [Route("catalog-api/v1/")]
     public class CatalogController : Controller
     {
         private static readonly List<Product> _products = new List<Product>
