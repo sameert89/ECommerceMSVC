@@ -46,17 +46,10 @@ namespace Customer.Controllers
                     throw new Exception("Unable to read product from Catalog");
                 }
                 // Create a View for the Cart MSVC
-                var purchasedProduct = new Dictionary<string, string?>
-                {
-                    ["Id"] = product.Id.ToString(),
-                    ["Name"] = product.Name,
-                    ["Description"] = product.Description,
-                    ["Price"] = product.Price.ToString(),
-                    ["Quantity"] = qty.ToString()
-                };
+                var purchasedProduct = new PurchasedProduct(product.Id, product.Name, product.Description, product.Price, qty);
 
                 // Make POST call to the cart to add items
-                HttpResponseMessage cartResponse = _httpClient.GetAsync(QueryHelpers.AddQueryString(cartURI, purchasedProduct)).Result;
+                HttpResponseMessage cartResponse = _httpClient.PostAsJsonAsync(cartURI, purchasedProduct).Result;
 
                 cartResponse.EnsureSuccessStatusCode();
 
